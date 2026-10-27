@@ -1,0 +1,165 @@
+/* BlogList —— 老派档案目录 / 手记本列表
+ * 整行宽 · 虚线分隔 · 左勾选 → 日期 → 标题 → 右箭头
+ * hover：行底微深（像被手指按住）+ 标题变红 + 箭头右移
+ */
+
+.blog {
+  /* 双列容器内：去掉大留白，顶部对齐 */
+  padding: 0;
+}
+
+.inner {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stampLine {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.75;
+  margin: 0 0 var(--space-sm);
+}
+
+.heading {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: clamp(26px, 2.6vw, 34px);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-xl);
+}
+
+.list {
+  border-top: 1px dashed rgba(43, 29, 20, 0.2);
+}
+
+.item {
+  border-bottom: 1px dashed rgba(43, 29, 20, 0.2);
+}
+
+/* ─── 行本体：Flex 整行 ─── */
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: background-color var(--duration-base) var(--ease-editorial);
+}
+
+/* hover：整行微微变深，像被手指按住 */
+.row:hover {
+  background-color: rgba(43, 29, 20, 0.05);
+}
+
+/* 手绘勾选批注 —— 加大手绘感 */
+.mark {
+  font-family: 'Caveat', cursive;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--color-accent);
+  opacity: 0.6;
+  flex-shrink: 0;
+  transform: translateY(3px) rotate(-10deg);
+}
+
+.date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+.title {
+  flex: 1;
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-ink);
+  text-align: left;
+  transition: color var(--duration-base) var(--ease-editorial);
+}
+
+.row:hover .title,
+.row[aria-expanded='true'] .title {
+  color: var(--color-accent);
+}
+
+/* 极简箭头 —— hover 右移，展开时转下 */
+.arrow {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: var(--color-muted);
+  transition:
+    transform var(--duration-base) var(--ease-editorial),
+    color var(--duration-base) var(--ease-editorial);
+}
+
+.row:hover .arrow {
+  transform: translateX(6px);
+  color: var(--color-accent);
+}
+
+.arrowOpen,
+.row:hover .arrowOpen {
+  transform: rotate(90deg);
+}
+
+/* ─── 原地展开摘要 ─── */
+.excerptWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms var(--ease-editorial);
+}
+
+.excerpt {
+  overflow: hidden;
+  margin: 0;
+  padding: 0 8px 0 46px; /* 与标题列对齐 */
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--color-muted);
+  max-width: 58ch;
+}
+
+.open {
+  grid-template-rows: 1fr;
+}
+
+.open .excerpt {
+  padding-bottom: 26px;
+}
+
+/* ─── 移动端 ─── */
+@media (max-width: 640px) {
+  .row {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+  .date {
+    width: auto;
+  }
+  .title {
+    flex-basis: 100%;
+    order: 3;
+    font-size: 19px;
+  }
+  .arrow {
+    margin-left: auto;
+  }
+  .excerpt {
+    padding-left: 14px;
+  }
+}

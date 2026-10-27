@@ -1,0 +1,36 @@
+/* ============================================================
+ * Design Tokens — 复古牛皮纸 / 老派手稿（v3 最终版）
+ * ============================================================ */
+
+:root {
+  /* 后备底色（图片加载失败时） */
+  --color-canvas: #B29770;
+  /* 卡片半透明羊皮纸 */
+  --color-paper: rgba(245, 235, 215, 0.4);
+  /* 毛玻璃导航底色 */
+  --color-nav-bg: rgba(190, 170, 140, 0.7);
+  /* 深墨水色主文字 */
+  --color-ink: #2B1D14;
+  /* 深卡其次要文字 */
+  --color-muted: #5E4B35;
+  /* 复古褪色红强调色 */
+  --color-accent: #8B3A2E;
+  /* 深褐色边框 / 分割线 */
+  --color-border: rgba(43, 29, 20, 0.2);
+  --color-border-soft: rgba(43, 29, 20, 0.15);
+
+  /* 间距 */
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  --radius-card: 1px;
+
+  --ease-editorial: cubic-bezier(0.2, 0, 0, 1);
+  --duration-base: 240ms;
+
+  --nav-height: 64px;
+}

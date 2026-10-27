@@ -1,0 +1,138 @@
+/* CourseRecord —— 复古学院学业档案（硬纸板夹）
+ * 虚线框 + 顶部标签页 + 打字机课程表 + 手写批注
+ */
+
+.record {
+  /* 双列容器内：去掉大留白，顶部对齐 */
+  padding: 0;
+}
+
+.inner {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── 硬纸板夹：虚线外框 + 微倾 ─── */
+.folder {
+  position: relative;
+  padding: 40px 32px 32px;
+  background-color: rgba(245, 235, 215, 0.4);
+  border: 1px dashed rgba(43, 29, 20, 0.35);
+  transform: rotate(0.3deg);
+  /* 内侧一道细线，模拟档案夹的双层边 */
+  box-shadow: inset 0 0 0 4px rgba(251, 249, 244, 0.5),
+    inset 0 0 0 5px rgba(43, 29, 20, 0.12);
+}
+
+/* 档案夹顶部突出的标签页 */
+.tab {
+  position: absolute;
+  top: -14px;
+  left: 24px;
+  padding: 5px 18px;
+  background-color: #E3D1B6;
+  border: 1px dashed rgba(43, 29, 20, 0.35);
+  border-bottom: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--color-muted);
+}
+
+.stampLine {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.75;
+  margin: 0 0 var(--space-sm);
+}
+
+.heading {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: clamp(26px, 2.6vw, 34px);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-md);
+}
+
+/* 专业报头 —— 打字机风格 */
+.meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px dashed rgba(43, 29, 20, 0.2);
+}
+
+/* ─── 课程列表：打字机行 ─── */
+.courses {
+  display: flex;
+  flex-direction: column;
+}
+
+.course {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 2px;
+  border-bottom: 1px dashed rgba(43, 29, 20, 0.15);
+}
+
+.course:last-child {
+  border-bottom: none;
+}
+
+.no {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+.name {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-ink);
+  flex-shrink: 0;
+  transition: color var(--duration-base) var(--ease-editorial);
+}
+
+/* hover：课程名变复古红 */
+.course:hover .name {
+  color: var(--color-accent);
+}
+
+/* 手写批注 —— 靠右，Caveat */
+.note {
+  flex: 1;
+  text-align: right;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--color-muted);
+  transform: rotate(-0.5deg);
+}
+
+/* ─── 移动端 ─── */
+@media (max-width: 640px) {
+  .folder {
+    padding: 44px 24px 36px;
+  }
+  .course {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+  .note {
+    flex-basis: 100%;
+    text-align: left;
+    padding-left: 34px; /* 与课程名对齐 */
+  }
+}

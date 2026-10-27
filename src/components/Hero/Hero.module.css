@@ -1,0 +1,170 @@
+/* Hero — 复古手稿风 + 大号水印字母 + 个人肖像拍立得 */
+
+.hero {
+  position: relative;
+  padding-top: calc(var(--nav-height) + var(--space-3xl));
+  padding-bottom: var(--space-3xl);
+  overflow: hidden;
+}
+
+/* 水印 "W" — 杂志印刷水印 */
+.watermark {
+  position: absolute;
+  right: -40px;
+  top: -30px;
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: clamp(200px, 28vw, 380px);
+  line-height: 1;
+  color: rgba(43, 29, 20, 0.06);
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* 内容层 + 肖像拍立得：flex 横向布局 */
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+/* 文字区占满剩余空间 */
+.textWrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.tagline {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-md);
+}
+
+.title {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 400;
+  font-size: clamp(48px, 7vw, 88px);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-lg);
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--color-muted);
+  max-width: 580px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.tagline {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-md);
+}
+
+/* 印章文字 —— 大标题上方的复古刊号 */
+.stampLine {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.75;
+  margin: 0 0 var(--space-sm);
+}
+
+/* ═══════════════════════════════════════════════════════
+ * 个人肖像拍立得
+ * 白边 10px + 下留白 28px（手写签名区）+ 旋转 3deg
+ * 左上角透明胶带
+ * ═══════════════════════════════════════════════════════ */
+.portraitWrap {
+  position: relative;
+  flex-shrink: 0;
+  padding: 10px 10px 28px; /* 白边 */
+  background: #FBF9F4;
+  border: 1px solid rgba(43, 29, 20, 0.12);
+  box-shadow:
+    0 2px 4px rgba(43, 29, 20, 0.1),
+    0 8px 24px rgba(43, 29, 20, 0.08);
+  transform: rotate(3deg);
+  width: 220px;
+}
+
+/* 左上角胶带 */
+.portraitWrap::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 28px;
+  width: 54px;
+  height: 18px;
+  background: rgba(180, 160, 120, 0.55);
+  border: 1px solid rgba(100, 80, 50, 0.2);
+  transform: rotate(-8deg);
+  box-shadow: 0 1px 2px rgba(43, 29, 20, 0.1);
+}
+
+.portrait {
+  width: 100%;
+  aspect-ratio: 4 / 5; /* 竖版肖像 */
+  object-fit: cover;
+  display: block;
+  background-color: #A89880; /* 加载失败后备：灰色底 */
+}
+
+/* ─── 占位图（无图片时）─── */
+.portraitPlaceholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: #A89880;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: rgba(43, 29, 20, 0.4);
+  text-transform: uppercase;
+}
+
+/* 手写批注 —— 照片下方的 Caveat 手写体 */
+.handnote {
+  font-family: 'Caveat', 'Segoe Script', cursive;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-align: center;
+  margin: 6px 0 0;
+  transform: rotate(-1.5deg);
+}
+
+/* ─── 媒体查询：移动端肖像移到标题下方 ─── */
+@media (max-width: 768px) {
+  .inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .portraitWrap {
+    align-self: center;
+    width: 200px;
+    transform: rotate(2deg);
+  }
+}

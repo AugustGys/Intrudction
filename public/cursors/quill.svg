@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2B1D14" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- 羽毛轮廓：笔尖在左上 (3,3)，羽身向右下展开 -->
+  <path d="M3 3 C 8 4, 15 8, 19 15 C 20.5 18, 21 20.5, 21 21 C 20 20.5, 17.5 20, 15 18.5 C 8 14.5, 4 8, 3 3 Z"/>
+  <!-- 羽轴 -->
+  <path d="M4.5 4.5 C 9 7, 13.5 11, 17 16.5"/>
+  <!-- 笔尖开缝 -->
+  <path d="M3 3 L 5.2 5.2"/>
+</svg>

@@ -1,0 +1,119 @@
+/* FragmentGrid — 碎片与光影（Bento 网格画廊）
+ *
+ * 行 1: [ 00  00  01 ]
+ * 行 2: [ 02  03  03 ]
+ * 等宽三列顶格对齐，主次靠跨列表达，图片统一 16/9
+ */
+
+.section {
+  position: relative;
+  padding: var(--space-3xl) 0 var(--space-2xl, 64px);
+}
+
+/* 手写批注 —— 右侧空白处，仅超宽屏 */
+.annotate {
+  position: absolute;
+  right: 52px;
+  top: 46%;
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  font-weight: 600;
+  color: #4a3a28;
+  opacity: 0.65;
+  transform: rotate(3deg);
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 1440px) {
+  .annotate {
+    display: block;
+  }
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.stampLine {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.75;
+  margin: 0 0 var(--space-sm);
+  text-align: center;
+}
+
+.heading {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: clamp(26px, 2.6vw, 34px);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-md);
+  text-align: center;
+}
+
+/* 复古装饰分割线 —— 标题与卡片区域之间 */
+.divider {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto var(--space-2xl, 64px);
+  color: var(--color-ink);
+  opacity: 0.4;
+}
+
+.divider svg {
+  max-width: min(600px, 80vw);
+  height: auto;
+}
+
+.grid {
+  display: grid;
+  /* 等宽三列 —— 规整的骨架 */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* ─── 主海报卡（第 1 张）：跨前两列 ─── */
+.featured {
+  grid-column: 1 / 3;
+}
+
+/* ─── 第 4 张：跨后两列，与主海报形成对角呼应 ─── */
+.grid > *:nth-child(4) {
+  grid-column: 2 / 4;
+}
+
+/* 媒体查询 — 平板两列 */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .featured {
+    grid-column: 1 / -1; /* 主海报跨满 */
+  }
+
+  .grid > *:nth-child(4) {
+    grid-column: auto;
+  }
+}
+
+/* 手机单列 */
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .featured {
+    grid-column: 1;
+  }
+}

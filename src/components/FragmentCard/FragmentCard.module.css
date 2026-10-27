@@ -1,0 +1,209 @@
+/* FragmentCard — 复古档案卡（生活碎片画廊）
+ * Bento 网格版：卡片顶格对齐，主次靠跨列表达
+ * 保留胶带装饰、复古滤镜图、hover 抬起、加载动画
+ */
+
+@keyframes card-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  position: relative;
+  background-color: var(--color-paper);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-card);
+  padding: 32px 32px 40px;
+  box-shadow: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    border-color var(--duration-base) var(--ease-editorial),
+    background-color var(--duration-base) var(--ease-editorial),
+    transform var(--duration-base) var(--ease-editorial),
+    z-index 0s linear 0s;
+  z-index: 1;
+}
+
+.card {
+  animation: card-fade-up 900ms var(--ease-editorial) var(--load-delay, 0ms)
+    forwards;
+}
+
+/* 卡片左上角胶带装饰 */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  width: 60px;
+  height: 20px;
+  background: rgba(180, 160, 120, 0.45);
+  border: 1px solid rgba(100, 80, 50, 0.25);
+  transform: rotate(-6deg);
+  z-index: -1;
+  box-shadow:
+    0 2px 3px rgba(43, 29, 20, 0.08),
+    inset 0 0 0 1px rgba(255, 248, 220, 0.25);
+}
+
+/* ─── Hover 状态 ─── */
+.card:hover {
+  border-color: var(--color-accent);
+  background-color: rgba(255, 248, 235, 0.6);
+  transform: translateY(-3px) scale(1.01);
+  z-index: 10;
+  transition:
+    border-color var(--duration-base) var(--ease-editorial),
+    background-color var(--duration-base) var(--ease-editorial),
+    transform var(--duration-base) var(--ease-editorial),
+    z-index 0s linear;
+}
+
+/* ─── 编号 ─── */
+.number {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-lg);
+  text-transform: uppercase;
+}
+
+/* ─── 复古印刷配图 ───
+ * sepia + grayscale 做"旧印刷"褪色，
+ * multiply 让图片与牛皮纸纹理融合，
+ * 统一 16/9 比例，保证 Bento 网格行高可控
+ */
+.picture {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  margin: 0 0 var(--space-lg);
+  border: 1px solid rgba(43, 29, 20, 0.25);
+  filter: sepia(0.7) grayscale(0.4) contrast(1.1) brightness(0.9);
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+
+/* ─── 标题 ─── */
+.title {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-md);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background-color: var(--color-accent);
+  transition: width var(--duration-base) var(--ease-editorial);
+}
+
+.card:hover .title::after {
+  width: 100%;
+}
+
+/* ─── 描述 ─── */
+.description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-xl);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.highlights {
+  font-size: 12px;
+  color: var(--color-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ─── 档案页码角标 —— 右下角 ─── */
+.pageMark {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ─── 档案馆印章 —— 主海报卡右上角 ─── */
+.stamp {
+  position: absolute;
+  top: 22px;
+  right: 30px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(139, 58, 46, 0.6);
+  border: 2px solid rgba(139, 58, 46, 0.6);
+  outline: 1px solid rgba(139, 58, 46, 0.6);
+  outline-offset: 3px;
+  padding: 7px 13px;
+  transform: rotate(-10deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ─── 主海报卡 .featured ─── */
+.featured.card {
+  padding: 40px 40px 48px;
+  background-color: rgba(245, 235, 215, 0.55);
+}
+
+.featured.card .title {
+  font-size: clamp(26px, 2.8vw, 34px);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.featured.card .number {
+  font-size: 17px;
+  color: var(--color-accent);
+}
+
+.featured.card .description {
+  font-size: 16px;
+  -webkit-line-clamp: 3;
+}
+
+.featured.card::before {
+  width: 72px;
+  height: 22px;
+  top: -11px;
+  left: 20px;
+  transform: rotate(-4deg);
+  background: rgba(139, 58, 46, 0.3); /* 复古红胶带 */
+}

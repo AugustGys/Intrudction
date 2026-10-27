@@ -1,0 +1,28 @@
+/* PaperBackground — 本地牛皮纸图 + 边缘暗角 Vignette */
+
+.imgLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('/paper-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #B29770; /* 后备色，图片加载失败时显示 */
+}
+
+/* 边缘暗角：中心透明 → 边缘深褐半透明 */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 35%,
+    rgba(43, 29, 20, 0.15) 65%,
+    rgba(30, 18, 10, 0.45) 100%
+  );
+}

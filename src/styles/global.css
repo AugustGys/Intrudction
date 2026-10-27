@@ -1,0 +1,114 @@
+@import './design-tokens.css';
+
+/* ============================================================
+ * Global Styles — 复古牛皮纸 / 老派手稿
+ * ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* 后备底色，当纹理图加载失败时显示 */
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: 'Fraunces', 'Noto Serif SC', 'Songti SC', serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fraunces 衬线工具类 —— 标题 / 编号 / Logo */
+.font-serif-display {
+  font-family: 'Fraunces', 'Cormorant Garamond', 'Times New Roman', serif;
+}
+
+/* 减动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 复古红的选中色 */
+::selection {
+  background-color: var(--color-accent);
+  color: #F5EBD7;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 背景散落的极淡水印几何图形 —— 纸面碎片感 */
+body::before {
+  content: '+';
+  position: fixed;
+  left: 4vw;
+  bottom: 10vh;
+  font-family: 'Fraunces', serif;
+  font-size: 44px;
+  line-height: 1;
+  color: rgba(43, 29, 20, 0.1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+body::after {
+  content: '◇';
+  position: fixed;
+  right: 6vw;
+  top: 22vh;
+  font-size: 34px;
+  line-height: 1;
+  color: rgba(43, 29, 20, 0.1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── 复古自定义光标 ───
+ * 仅精确指针设备（桌面）启用；触屏（pointer: coarse）自动回退系统默认
+ * 热点：quill 2 2（笔尖在左上） / gear 12 12（齿轮中心）
+ * 逗号后的 auto / pointer 是浏览器不支持 SVG 指针时的回退
+ */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: url('/cursors/quill.svg') 2 2, auto;
+  }
+
+  a,
+  button,
+  [role='button'] {
+    cursor: url('/cursors/gear.svg') 12 12, pointer;
+  }
+}
