@@ -1,0 +1,220 @@
+/* AdminLogin —— 一张用打字机打出来的档案馆通行证 */
+
+.page {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px 64px;
+}
+
+.pass {
+  position: relative;
+  width: min(580px, 100%);
+  padding: 46px 48px 34px 72px;
+  background-color: rgba(251, 249, 244, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px dashed rgba(43, 29, 20, 0.45);
+  box-shadow:
+    inset 0 0 0 6px rgba(251, 249, 244, 0.65),
+    inset 0 0 0 7px rgba(43, 29, 20, 0.16),
+    0 24px 60px rgba(43, 29, 20, 0.2);
+  transform: rotate(-0.35deg);
+}
+
+/* 左侧票根：虚线 + 打孔 */
+.holes {
+  position: absolute;
+  left: 22px;
+  top: 20px;
+  bottom: 20px;
+  width: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-right: 1px dashed rgba(43, 29, 20, 0.28);
+}
+
+.holes span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-canvas);
+  box-shadow: inset 0 1px 2px rgba(43, 29, 20, 0.4);
+}
+
+/* 右上角红色准入章 */
+.stamp {
+  position: absolute;
+  top: 22px;
+  right: 26px;
+  width: 74px;
+  height: 74px;
+  border: 2px solid rgba(139, 58, 46, 0.6);
+  outline: 1px solid rgba(139, 58, 46, 0.3);
+  outline-offset: 3px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  color: rgba(139, 58, 46, 0.75);
+  transform: rotate(9deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+.header {
+  padding-right: 90px;
+}
+
+.kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.8;
+  margin: 0 0 10px;
+}
+
+.title {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-size: clamp(28px, 5vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.subTitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 8px 0 0;
+}
+
+/* 登记信息：两列 */
+.serial {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 28px;
+  margin: 26px 0 28px;
+  padding: 12px 0;
+  border-top: 1px dashed rgba(43, 29, 20, 0.3);
+  border-bottom: 1px dashed rgba(43, 29, 20, 0.3);
+}
+
+.serialLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.serialValue {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-ink);
+  text-align: right;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.error {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  color: var(--color-accent);
+  border-left: 2px solid var(--color-accent);
+  padding: 6px 10px;
+  margin: 0;
+  background-color: rgba(139, 58, 46, 0.06);
+}
+
+.note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  opacity: 0.7;
+  text-align: center;
+  border-top: 1px solid rgba(43, 29, 20, 0.14);
+  padding-top: 16px;
+  margin: 28px 0 0;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--duration-base) var(--ease-editorial),
+    border-color var(--duration-base) var(--ease-editorial);
+}
+
+.back:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+@media (max-width: 560px) {
+  .pass {
+    padding: 36px 24px 28px 54px;
+  }
+  .holes {
+    left: 14px;
+    width: 24px;
+  }
+  .stamp {
+    width: 58px;
+    height: 58px;
+    top: 16px;
+    right: 16px;
+    font-size: 8px;
+  }
+  .header {
+    padding-right: 62px;
+  }
+  .serial {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .serialValue {
+    text-align: left;
+    margin-bottom: 6px;
+  }
+}

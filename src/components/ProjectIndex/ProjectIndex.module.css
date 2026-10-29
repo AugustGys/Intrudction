@@ -71,13 +71,30 @@
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid rgba(43, 29, 20, 0.3);
   border-radius: 4px;
-  /* 内侧一道细线，模拟双线边框 */
+  /* 内侧一道细线（双线边框）+ 外侧偏移描边 = 三层线框，模拟古典印刷品边框厚度 */
   box-shadow:
     inset 0 0 0 3px rgba(251, 249, 244, 0.7),
     inset 0 0 0 4px rgba(43, 29, 20, 0.18);
+  outline: 1px solid rgba(43, 29, 20, 0.14);
+  outline-offset: 3px;
   transition:
     transform var(--duration-base) var(--ease-editorial),
     background-color var(--duration-base) var(--ease-editorial);
+}
+
+/* 左上角卷草纹角饰 —— 仅一处，刻意不对称（洛可可式生长，而非四角镜像套路） */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 34px; /* 避开打孔列 */
+  width: 30px;
+  height: 30px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' fill='none' stroke='%232B1D14' stroke-width='1' stroke-linecap='round'><path d='M3 27C3 15 9 7 26 4'/><path d='M3 27C8 24 10 20 10 16 10 13 7 12 5 14 4 16 6 18 8 17'/><path d='M15 10C16 7 19 5 23 5.5'/><circle cx='26.5' cy='4' r='0.9' fill='%232B1D14' stroke='none'/></svg>");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 /* hover：抽拉档案卡 —— 右移 + 背景变实 */
@@ -157,6 +174,16 @@
   transform: rotate(-3deg);
   white-space: nowrap;
   user-select: none;
+}
+
+/* ─── 加载 / 错误状态 ─── */
+.status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--color-muted);
+  padding: var(--space-lg) 0;
+  margin: 0;
 }
 
 /* ─── 移动端 ─── */

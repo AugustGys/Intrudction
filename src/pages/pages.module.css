@@ -1,0 +1,49 @@
+/* pages —— 各路由页面共享样式 */
+
+/* 每个页面撑满一屏（减去 fixed 导航高度） */
+.page {
+  min-height: calc(100vh - var(--nav-height));
+}
+
+/* 无自带导航间距的页面（Hero 页面除外）：顶部留出导航高度 */
+.pagePadded {
+  padding-top: calc(var(--nav-height) + var(--space-2xl));
+}
+
+/* 介绍页双列杂志内页：手记 | 个人介绍（右侧更宽 + 下移 40px 错落） */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  align-items: start;
+  max-width: 1280px;
+  margin: 0 auto;
+  /* 顶部下沉：导航高度 + 80px，不贴头、底部不留大空白 */
+  padding: calc(var(--nav-height) + 80px) var(--space-xl) var(--space-3xl);
+}
+
+.twoCol > :first-child {
+  border-right: 1px dashed rgba(43, 29, 20, 0.2);
+  padding-right: var(--space-xl);
+}
+
+.twoCol > :last-child {
+  padding-left: var(--space-xl);
+  margin-top: 40px; /* 打破平齐：右列整体下移 */
+}
+
+@media (max-width: 900px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+  }
+  .twoCol > :first-child {
+    border-right: none;
+    border-bottom: 1px dashed rgba(43, 29, 20, 0.2);
+    padding-right: 0;
+    padding-bottom: var(--space-xl);
+  }
+  .twoCol > :last-child {
+    padding-left: 0;
+    margin-top: 0;
+  }
+}

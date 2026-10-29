@@ -1,0 +1,163 @@
+/* AboutMeCard —— 个人介绍档案卡（复古硬纸板夹风） */
+
+.wrap {
+  position: relative;
+}
+
+/* 档案卡本体：双线框 + 微倾 */
+.card {
+  position: relative;
+  background-color: rgba(251, 249, 244, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px dashed rgba(43, 29, 20, 0.35);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 0 0 6px rgba(251, 249, 244, 0.55),
+    inset 0 0 0 7px rgba(43, 29, 20, 0.18);
+  padding: 44px 40px 40px;
+  transform: rotate(0.4deg);
+}
+
+/* 左上角索引标签页 */
+.tab {
+  position: absolute;
+  top: -14px;
+  left: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(251, 249, 244, 0.92);
+  background-color: var(--color-accent);
+  padding: 5px 12px 4px;
+  border-radius: 2px 2px 0 0;
+  transform: rotate(-1deg);
+  pointer-events: none;
+}
+
+.stampLine {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.75;
+  margin: 0 0 var(--space-sm);
+}
+
+.heading {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: clamp(26px, 2.6vw, 34px);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-lg);
+}
+
+/* ─── 基本信息登记行 ─── */
+.fields {
+  margin: 0 0 var(--space-lg);
+  border-top: 1px dashed rgba(43, 29, 20, 0.25);
+}
+
+.field {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(43, 29, 20, 0.25);
+}
+
+.field dt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-accent);
+  width: 72px;
+  flex-shrink: 0;
+}
+
+.field dd {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-size: 15px;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─── 荣誉盖章列表 ─── */
+.subLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 12px;
+}
+
+.honors {
+  list-style: none;
+  margin: 0 0 var(--space-lg);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.honor {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  border: 1.5px solid rgba(139, 58, 46, 0.5);
+  border-radius: 2px;
+  padding: 6px 12px 5px;
+  transform: rotate(-1.2deg);
+}
+
+.honor:nth-child(2n) {
+  transform: rotate(1deg);
+}
+
+.honorTitle {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.honorYear {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--color-muted);
+}
+
+/* ─── 感性独白 ─── */
+.monologue {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-muted);
+  margin: 0;
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(43, 29, 20, 0.15);
+}
+
+/* ─── 加载 / 错误状态 ─── */
+.status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--color-muted);
+  padding: var(--space-lg) 0;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 36px 24px 28px;
+  }
+}

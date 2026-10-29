@@ -1,0 +1,367 @@
+/* HeroCarousel —— 紧贴导航栏的全幅长条轮播（无标题 / 无图注 / 无边框） */
+
+.band {
+  position: relative;
+  z-index: 1;
+  /* 紧贴导航：不留任何上间距 */
+}
+
+/* ═══════════════════════════════════════════════════════
+ * 画幅 —— 100% 视口宽度，边框全部移除
+ * 底部保留一层纸色渐变，让照片下沿自然溶进纸背景
+ * ═══════════════════════════════════════════════════════ */
+.stage {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 42vh, 480px);
+  overflow: hidden;
+  background-color: #a89880;
+}
+
+.viewport {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  outline: none;
+}
+
+.viewport:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.035);
+  transition:
+    opacity 720ms var(--ease-editorial),
+    transform 1200ms var(--ease-editorial);
+  pointer-events: none;
+}
+
+.slideActive {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  /* 老照片：泛黄、略提对比、压一点亮度 */
+  filter: sepia(0.4) contrast(1.05) brightness(0.95);
+  user-select: none;
+}
+
+/* 纸色 multiply 叠印层：图片与牛皮纸底色融合，像印在纸上 */
+.paperTint {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-color: rgba(178, 151, 112, 0.4);
+  mix-blend-mode: multiply;
+}
+
+/* 底边渐变：向下的牛皮纸色，让图片下沿渐渐隐入纸背景 */
+.fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(220, 203, 173, 0) 0%,
+    rgba(220, 203, 173, 0.18) 40%,
+    rgba(220, 203, 173, 0.52) 72%,
+    rgba(220, 203, 173, 0.96) 100%
+  );
+}
+
+/* 暗角：四周压深，中心留亮 */
+.viewport::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  box-shadow: inset 0 0 70px rgba(43, 29, 20, 0.26);
+  pointer-events: none;
+}
+
+/* ─── 极简线形箭头，固定在左右两侧边缘 ─── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 56px;
+  padding: 0;
+  color: rgba(251, 249, 244, 0.82);
+  background: none;
+  border: none;
+  opacity: 0.82;
+  filter: drop-shadow(0 1px 3px rgba(43, 29, 20, 0.55));
+  transition:
+    opacity var(--duration-base) var(--ease-editorial),
+    color var(--duration-base) var(--ease-editorial);
+}
+
+.arrow:hover {
+  opacity: 1;
+  color: #fbf9f4;
+}
+
+.arrow:focus-visible {
+  outline: 1px dashed rgba(251, 249, 244, 0.72);
+  outline-offset: 2px;
+}
+
+.arrow svg {
+  width: 34px;
+  height: 11px;
+}
+
+.arrowPrev {
+  left: clamp(8px, 2vw, 28px);
+  transform: translateY(-50%);
+}
+
+.arrowNext {
+  right: clamp(8px, 2vw, 28px);
+  transform: translateY(-50%);
+}
+
+/* ─── 右下角页码指示器 ─── */
+.dots {
+  position: absolute;
+  right: clamp(16px, 3vw, 40px);
+  bottom: 18px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dot {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: rgba(43, 29, 20, 0.78);
+  background: none;
+  border: none;
+  border-bottom: 1px dashed rgba(43, 29, 20, 0.3);
+  padding: 3px 2px;
+  transition:
+    color var(--duration-base) var(--ease-editorial),
+    border-color var(--duration-base) var(--ease-editorial);
+}
+
+.dot:hover {
+  color: var(--color-ink);
+}
+
+.dotActive {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* ═══════════════════════════════════════════════════════
+ * 手工剪贴装饰 —— 胶带 / 打字机纸条 / 复古分割线
+ * 全部 absolute 悬浮在图片底边上，不影响文档流
+ * ═══════════════════════════════════════════════════════ */
+.ornaments {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* 左右两条半透明复古胶带：压住图片底边与下方纸面 */
+.tape {
+  position: absolute;
+  bottom: -16px;
+  width: 136px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.4);
+  /* 细斜纹微纹理，模拟胶带的拉伸痕迹 */
+  background-image: repeating-linear-gradient(
+    46deg,
+    rgba(255, 255, 255, 0.16) 0 2px,
+    rgba(255, 255, 255, 0) 2px 6px
+  );
+  box-shadow: 0 1px 3px rgba(43, 29, 20, 0.12);
+  /* 毛边：不规则多边形裁切，像手撕胶带 */
+  clip-path: polygon(0% 9%, 7% 0%, 93% 4%, 100% 14%, 96% 90%, 88% 100%, 9% 95%, 0% 84%);
+  opacity: 0.92;
+}
+
+.tapeLeft {
+  left: clamp(44px, 10vw, 170px);
+  transform: rotate(-4deg);
+}
+
+.tapeRight {
+  right: clamp(44px, 10vw, 170px);
+  transform: rotate(3.5deg);
+}
+
+/* 打字机纸条：被撕下来的横条，横跨照片底边 */
+.figSlip {
+  position: absolute;
+  left: 50%;
+  bottom: -20px;
+  transform: translateX(-50%) rotate(-1.6deg);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 9px 18px 8px;
+  background-color: #fbf9f4;
+  border: 1px solid rgba(43, 29, 20, 0.16);
+  box-shadow:
+    0 2px 4px rgba(43, 29, 20, 0.12),
+    0 8px 18px rgba(43, 29, 20, 0.14);
+  /* 下沿撕口：不规则的锯齿边 */
+  clip-path: polygon(
+    0.6% 0%,
+    99.4% 0%,
+    100% 86%,
+    97% 100%,
+    92% 93%,
+    84% 100%,
+    71% 94%,
+    56% 100%,
+    39% 93%,
+    25% 100%,
+    12% 94%,
+    0% 100%
+  );
+  white-space: nowrap;
+}
+
+.figText {
+  font-family: 'Courier New', 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: #4a3a2c;
+  text-transform: uppercase;
+}
+
+/* 纸条顶部的一小块胶带 */
+.figTape {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 56px;
+  height: 18px;
+  transform: translateX(-50%) rotate(-3deg);
+  background-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 1px 2px rgba(43, 29, 20, 0.1);
+  clip-path: polygon(2% 8%, 98% 0%, 100% 88%, 90% 100%, 8% 96%, 0% 42%);
+}
+
+/* 复古分割线：两端渐隐的细线 + 中间小菱形，落在文字区上方 */
+.divider {
+  position: absolute;
+  left: 50%;
+  /* 与 Hero .inner 的 margin-top clamp 同步：始终落在文字区上方约 40px */
+  bottom: calc(40px - clamp(56px, 9vh, 104px));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(520px, 58%);
+  opacity: 0.3;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(43, 29, 20, 0) 0%,
+    rgba(43, 29, 20, 0.8) 18%,
+    rgba(43, 29, 20, 0.8) 82%,
+    rgba(43, 29, 20, 0) 100%
+  );
+}
+
+.dividerMark {
+  font-family: 'Fraunces', serif;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+/* ─── 响应式 ─── */
+@media (max-width: 768px) {
+  .stage {
+    height: clamp(240px, 36vh, 340px);
+  }
+
+  .arrow {
+    width: 40px;
+    height: 48px;
+  }
+
+  .arrow svg {
+    width: 26px;
+    height: 9px;
+  }
+
+  .arrowPrev {
+    left: 4px;
+  }
+
+  .arrowNext {
+    right: 4px;
+  }
+
+  .dots {
+    right: 14px;
+    bottom: 14px;
+    gap: 9px;
+  }
+
+  /* 窄屏空间有限：隐藏两侧胶带，保留纸条与分割线 */
+  .tape {
+    display: none;
+  }
+
+  .figSlip {
+    bottom: -15px;
+    padding: 7px 12px 6px;
+  }
+
+  .figText {
+    font-size: 9px;
+    letter-spacing: 0.11em;
+  }
+
+  .figTape {
+    top: -9px;
+    width: 44px;
+    height: 15px;
+  }
+
+  .divider {
+    width: 78%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+    transform: none;
+  }
+}

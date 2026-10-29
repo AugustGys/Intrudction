@@ -1,12 +1,35 @@
 import styles from './AboutSection.module.css';
 
+/* PLACEHOLDER: 常用工具（想增减直接改数组） */
+const TOOLS = ['VS Code', 'Trae', 'Intellij IDEA', 'Git'];
+
+/* PLACEHOLDER: 联系方式（换成你的邮箱和 GitHub 主页） */
+const CONTACTS = [
+  { label: 'EMAIL ME', href: 'mailto:hello@example.com' },
+  { label: 'GITHUB', href: 'https://github.com/' },
+];
+
 export function AboutSection() {
   return (
-    <section id="about" className={styles.about}>
+    <section className={styles.about}>
       <div className={styles.letter}>
-        {/* 复古邮戳 —— 右上角双线圆章 */}
+        {/* 右上角邮票（齿孔边缘 + 极小风景图） */}
+        <div className={styles.stamp} aria-hidden="true">
+          <img src="https://picsum.photos/seed/letter-landscape/120/140" alt="" className={styles.stampImg} />
+          <span className={styles.stampPrice}>2026</span>
+        </div>
+
+        {/* 圆形邮戳：波浪线 + 城市 + 日期 */}
         <div className={styles.postmark} aria-hidden="true">
-          <span className={styles.postmarkText}>DIGITAL<br />GARDEN</span>
+          <svg className={styles.waves} viewBox="0 0 60 24" fill="none">
+            <path d="M2 5 q5 -4 10 0 t10 0 t10 0 t10 0 t10 0" stroke="currentColor" strokeWidth="1.1" />
+            <path d="M2 12 q5 -4 10 0 t10 0 t10 0 t10 0 t10 0" stroke="currentColor" strokeWidth="1.1" />
+            <path d="M2 19 q5 -4 10 0 t10 0 t10 0 t10 0 t10 0" stroke="currentColor" strokeWidth="1.1" />
+          </svg>
+          <div className={styles.postmarkCircle}>
+            <span className={styles.postmarkCity}>DALIAN</span>
+            <span className={styles.postmarkDate}>2026.10.29</span>
+          </div>
         </div>
 
         <p className={styles.stampLine}>A LETTER TO YOU</p>
@@ -26,6 +49,23 @@ export function AboutSection() {
 
         {/* 手写签名 */}
         <p className={styles.signature}>— yours, GanYuSheng</p>
+      </div>
+
+      {/* ─── 信纸下方：常驻工具与联系方式 ─── */}
+      <div className={styles.below}>
+        <ul className={styles.tools} aria-label="常用工具">
+          {TOOLS.map((t) => (
+            <li key={t} className={styles.tool}>{t}</li>
+          ))}
+        </ul>
+
+        <nav className={styles.contacts} aria-label="联系方式">
+          {CONTACTS.map((c) => (
+            <a key={c.label} href={c.href} className={styles.contact} target="_blank" rel="noreferrer">
+              {c.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </section>
   );

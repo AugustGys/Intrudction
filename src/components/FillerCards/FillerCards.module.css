@@ -1,0 +1,225 @@
+/* FillerCards —— 首页不规则卡片架（复古档案风）
+ * 每种卡片一个变体类：.clock / .quote / .calendar / .reading / .weather
+ */
+
+.shelf {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl) var(--space-3xl);
+}
+
+/* 不规则网格：3 列，卡片各自跨列 + 微旋转，像随手摊在桌上的卡片 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* ─── 卡片基底 ─── */
+.card {
+  position: relative;
+  background-color: rgba(251, 249, 244, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(43, 29, 20, 0.28);
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 3px rgba(251, 249, 244, 0.6),
+    inset 0 0 0 4px rgba(43, 29, 20, 0.12);
+  padding: 20px 22px;
+  transition: transform var(--duration-base) var(--ease-editorial),
+    background-color var(--duration-base) var(--ease-editorial);
+}
+
+.card:hover {
+  background-color: rgba(251, 249, 244, 0.9);
+  transform: translateY(-2px);
+}
+
+/* 顶部打孔小圆点装饰 */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-canvas);
+  box-shadow: inset 0 1px 2px rgba(43, 29, 20, 0.35);
+  pointer-events: none;
+}
+
+.cardLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.75;
+  margin: 0 0 12px;
+}
+
+/* ─── 各变体的不规则分布与微旋转 ─── */
+.clock {
+  grid-column: span 1;
+  transform: rotate(-0.8deg);
+}
+.clock:hover { transform: rotate(-0.8deg) translateY(-2px); }
+
+.quote {
+  grid-column: span 2;
+  transform: rotate(0.6deg);
+}
+.quote:hover { transform: rotate(0.6deg) translateY(-2px); }
+
+.calendar {
+  grid-column: span 1;
+  transform: rotate(0.7deg);
+}
+.calendar:hover { transform: rotate(0.7deg) translateY(-2px); }
+
+.reading {
+  grid-column: span 1;
+  transform: rotate(-0.6deg);
+}
+.reading:hover { transform: rotate(-0.6deg) translateY(-2px); }
+
+.weather {
+  grid-column: span 1;
+  transform: rotate(-0.9deg);
+}
+.weather:hover { transform: rotate(-0.9deg) translateY(-2px); }
+
+/* ─── 时钟卡 ─── */
+.clockDigits {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 44px;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.clockSec {
+  font-size: 18px;
+  color: var(--color-accent);
+  margin-left: 6px;
+}
+
+.clockDate {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+  margin: 10px 0 0;
+}
+
+/* ─── 名言卡 ─── */
+.quoteText {
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0;
+  line-height: 1.3;
+  transform: rotate(-1deg);
+}
+
+.quoteFrom {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--color-muted);
+  margin: 10px 0 0;
+  text-align: right;
+}
+
+/* ─── 月历卡 ─── */
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+
+.calHead {
+  font-size: 10px;
+  color: var(--color-muted);
+  letter-spacing: 0.1em;
+  padding-bottom: 4px;
+}
+
+.calDay {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--color-ink);
+  padding: 3px 0;
+  border-radius: 2px;
+}
+
+.calToday {
+  background-color: var(--color-accent);
+  color: #FBF9F4;
+  font-weight: 700;
+}
+
+/* ─── 在读卡 ─── */
+.bookTitle {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0 0 4px;
+}
+
+.bookAuthor {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin: 0 0 10px;
+}
+
+.bookProgress {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+/* ─── 天气卡 ─── */
+.weatherTemp {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0;
+  line-height: 1;
+}
+
+.weatherDesc {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin: 8px 0 0;
+}
+
+/* ─── 响应式 ─── */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .quote {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .quote {
+    grid-column: span 1;
+  }
+}

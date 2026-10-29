@@ -51,3 +51,10 @@
   color: var(--color-accent);
   border-color: var(--color-accent);
 }
+
+/* 当前路由：复古红下划线高亮 */
+.active {
+  color: var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 2px;
+}

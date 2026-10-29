@@ -163,3 +163,78 @@
     padding-left: 14px;
   }
 }
+
+/* ─── 底部补白：查看全部链接 + 横向拍立得 ─── */
+.moreLink {
+  display: inline-block;
+  margin-top: var(--space-lg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--duration-base) var(--ease-editorial),
+    border-color var(--duration-base) var(--ease-editorial);
+}
+
+.moreLink:hover {
+  border-color: var(--color-accent);
+}
+
+.moreLink span {
+  display: inline-block;
+  transition: transform var(--duration-base) var(--ease-editorial);
+}
+
+.moreLink:hover span {
+  transform: translateX(4px);
+}
+
+/* 横向拍立得风景照：白边 + 微倾 + 复古滤镜 */
+.snap {
+  margin: var(--space-xl) 0 0;
+  padding: 8px 8px 30px; /* 底部留白写字 */
+  background: #FBF9F4;
+  border: 1px solid rgba(43, 29, 20, 0.15);
+  transform: rotate(-1.2deg);
+  width: 82%;
+  transition: transform var(--duration-base) var(--ease-editorial);
+}
+
+.snap:hover {
+  transform: rotate(-1.2deg) translateY(-3px);
+}
+
+.snapImg {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+  /* 与碎片区一致的复古融合滤镜 */
+  filter: sepia(0.7) grayscale(0.4) contrast(1.1) brightness(0.9);
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+
+/* ─── 加载 / 错误状态 ─── */
+.status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--color-muted);
+  padding: var(--space-lg) 8px;
+  margin: 0;
+}
+
+.snapCaption {
+  font-family: 'Caveat', cursive;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-align: center;
+  margin-top: 6px;
+  transform: rotate(-1deg);
+}

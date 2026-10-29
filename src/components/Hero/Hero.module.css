@@ -2,7 +2,8 @@
 
 .hero {
   position: relative;
-  padding-top: calc(var(--nav-height) + var(--space-3xl));
+  /* 顶部只留出 fixed 导航的高度，轮播紧贴导航下方 */
+  padding-top: var(--nav-height);
   padding-bottom: var(--space-3xl);
   overflow: hidden;
 }
@@ -28,7 +29,8 @@
   position: relative;
   z-index: 1;
   max-width: 1240px;
-  margin: 0 auto;
+  /* 轮播条下方留出呼吸空间，文字不贴图片底边 */
+  margin: clamp(56px, 9vh, 104px) auto 0;
   padding: 0 var(--space-xl);
   display: flex;
   align-items: center;
@@ -58,6 +60,10 @@
   line-height: 1.05;
   color: var(--color-ink);
   margin: 0 0 var(--space-lg);
+  /* 凸版印刷（Letterpress）：下亮上暗的双向微阴影，模拟铅字压进纸里的厚重感 */
+  text-shadow:
+    0 1px 0 rgba(255, 248, 235, 0.45),
+    0 -1px 1px rgba(43, 29, 20, 0.3);
 }
 
 .subtitle {
@@ -66,6 +72,17 @@
   max-width: 580px;
   margin: 0;
   line-height: 1.6;
+}
+
+/* 首字下沉（Initial）—— 古典书籍排版的章节起笔 */
+.subtitle::first-letter {
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-size: 3.1em;
+  font-weight: 600;
+  line-height: 0.82;
+  float: left;
+  padding: 5px 10px 0 0;
+  color: var(--color-accent); /* 古典写本的红字起笔传统 */
 }
 
 .tagline {
@@ -89,9 +106,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════
- * 个人肖像拍立得
- * 白边 10px + 下留白 28px（手写签名区）+ 旋转 3deg
- * 左上角透明胶带
+ * 个人肖像 —— 椭圆雕花边相框 + 火漆印章（替代拍立得胶带）
  * ═══════════════════════════════════════════════════════ */
 .portraitWrap {
   position: relative;
@@ -106,18 +121,45 @@
   width: 220px;
 }
 
-/* 左上角胶带 */
-.portraitWrap::after {
+/* 相框顶部中央的卷草饰花（fleuron） */
+.portraitWrap::before {
   content: '';
   position: absolute;
-  top: -8px;
-  left: 28px;
-  width: 54px;
-  height: 18px;
-  background: rgba(180, 160, 120, 0.55);
-  border: 1px solid rgba(100, 80, 50, 0.2);
-  transform: rotate(-8deg);
-  box-shadow: 0 1px 2px rgba(43, 29, 20, 0.1);
+  top: -14px;
+  left: 50%;
+  width: 44px;
+  height: 26px;
+  transform: translateX(-50%);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 26' fill='none' stroke='%232B1D14' stroke-width='1' stroke-linecap='round'><path d='M22 24C22 14 16 8 8 8 4 8 2 11 4 13 6 15 9 13 8 10'/><path d='M22 24C22 14 28 8 36 8 40 8 42 11 40 13 38 15 35 13 36 10'/><path d='M22 24L22 8'/><circle cx='22' cy='5' r='1.1' fill='%232B1D14' stroke='none'/></svg>");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* 右上角火漆印章（替代原胶带） */
+.portraitWrap::after {
+  content: 'M';
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  /* 蜡封质感：左上半高光，整体哑光深红 */
+  background: radial-gradient(circle at 35% 30%, #A8503F, #7A3226);
+  color: rgba(251, 249, 244, 0.88);
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-size: 19px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 0 0 2px rgba(251, 249, 244, 0.28), /* 印面内圈刻线 */
+    0 2px 5px rgba(43, 29, 20, 0.28);
+  transform: rotate(9deg);
+  pointer-events: none;
 }
 
 .portrait {
@@ -126,6 +168,11 @@
   object-fit: cover;
   display: block;
   background-color: #A89880; /* 加载失败后备：灰色底 */
+  /* 椭圆古典相框：双层描边模拟雕花框的内外沿 */
+  border-radius: 50% / 42%; /* 纵向椭圆 */
+  border: 1px solid rgba(43, 29, 20, 0.5);
+  outline: 1px solid rgba(43, 29, 20, 0.28);
+  outline-offset: 4px;
 }
 
 /* ─── 占位图（无图片时）─── */

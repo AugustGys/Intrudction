@@ -11,7 +11,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* 多页面路由跳转，无需锚点平滑滚动；导航偏移由页面自身 padding 处理 */
   scroll-padding-top: var(--nav-height);
 }
 

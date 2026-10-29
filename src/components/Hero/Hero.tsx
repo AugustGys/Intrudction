@@ -1,3 +1,4 @@
+import { HeroCarousel } from '../HeroCarousel/HeroCarousel';
 import styles from './Hero.module.css';
 
 /** 当图片加载失败时，显示占位灰底 + "Your Photo" */
@@ -10,6 +11,9 @@ export function Hero() {
     <section id="top" className={styles.hero}>
       {/* 水印字 —— 数字花园 */}
       <span aria-hidden="true" className={styles.watermark}>园</span>
+
+      {/* 导航栏下方的全幅影像档案轮播 */}
+      <HeroCarousel />
 
       <div className={styles.inner}>
         {/* 左侧文字区 */}

@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # TypeScript cache
 *.tsbuildinfo
+# 忽略后端的依赖和敏感信息
+server/node_modules/
+server/.env
